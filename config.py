@@ -7,6 +7,13 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 's##cretK3y(*^&%^'
+    DB_NAME = os.environ['DB_NAME']
+    DB_PASS = os.environ['DB_PASS']
+    MONGODB_SETTINGS = {
+    'db': 'project-tracker-prod',
+    'host':'mongodb://pb3975:{}@cluster0-shard-00-00-fyrgs.mongodb.net:27017,cluster0-shard-00-01-fyrgs.mongodb.net:27017,cluster0-shard-00-02-fyrgs.mongodb.net:27017/{}?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin'.format(DB_PASS, DB_NAME)
+}
+
 
 
 class ProductionConfig(Config):
