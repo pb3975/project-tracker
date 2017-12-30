@@ -1,1 +1,1 @@
-web: python manage.py runserver 
+web: gunicorn project_tracker.app:app
