@@ -1,6 +1,6 @@
 import datetime
 from flask import url_for
-from project_tracker import db
+from app import db
 
 
 class Note(db.EmbeddedDocument):

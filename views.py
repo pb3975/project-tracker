@@ -2,7 +2,7 @@ from flask import Blueprint, request, redirect, render_template, url_for
 from flask.views import MethodView
 
 from flask_mongoengine.wtf import model_form
-from project_tracker.models import Project, Note
+from models import Project, Note
 
 projects = Blueprint('projects', __name__, template_folder='templates')
 
