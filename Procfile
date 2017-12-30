@@ -1,1 +1,1 @@
-web: gunicorn project_tracker.app:app
+gunicorn project_tracker:app
