@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My Tumblelog</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>.content {padding-top: 80px;} a.brand {color: blue }</style>
+  </head>
+
+  <body>
+
+    {%- block topbar -%}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <h2>
+              <a href="/" class="brand">Projekter</a> <small>Simple Project Tracker</small>
+          </h2>
+        </div>
+        <div class="navbar-collapse">
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {%- endblock -%}
+
+    <div class="container">
+      <div class="content">
+        {% block page_header %}{% endblock %}
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% block js_footer %}{% endblock %}
+  </body>
+</html>

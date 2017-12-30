@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% import "_forms.html" as forms %}
+
+{% block page_header %}
+  <div class="page-header">
+    <h1>{{ project.title }}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+<p>Status : {{ project.status }}</p>
+<p>Begin Date : {{ project.startDate }}</p>
+<p>Completed Date : {{ project.EndDate }}</p>
+<p>Week Completed : {{ project.week_completed }}</p>
+<p>Primary Language: {{ project.primary_language }}</p>
+<p>Tools Used : {{ project.tools }}</p>
+<p>Gthub Repo Link :{{ project.repo }}</p>
+
+<p>Created Date {{ post.created_at.strftime('%H:%M %Y-%m-%d') }}</p>
+<blockquote>Description : {{ project.description }}</blockquote>
+  <h2>
+      Add new Project
+  </h2>
+
+  <form action="?type={{ request.args.get('type') }}" method="post">
+    {{ forms.render(form) }}
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" value="save">
+      <a href="{{ url_for("index") }}" class="btn btn-default">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

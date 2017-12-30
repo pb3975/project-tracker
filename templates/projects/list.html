@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for project in projects %}
+      <h2><a href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
+      {% if project.description %}
+        {% if project.status == 'New' %}
+          <blockquote>{{ project.description|truncate(100) }}</blockquote>
+          <p>{{ project.createdDate }}</p>
+        {% else %}
+          <p>{{ project.description|truncate(100) }}</p>
+        {% endif %}
+      {% endif %}
+      {% if project.repo %}
+        <p><a href="{{ project.repo }}"> GitHub Repo </a></p>
+      {% endif %}
+      {% if project.location_url %}
+        <p><a href="{{ project.location_url }}"> See it Live! </a></p>
+      {% endif %}
+      <p>
+        {{ project.createdDate.strftime('%Y-%m-%d') }} |
+        {% with total=project.notes|length %}
+            {{ total }} notes {%- if total > 1 %}s{%- endif -%}
+        {% endwith %}
+      </p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import '_forms.html' as forms %}
+
+{% block page_header %}
+  <div class="page-header">
+    <h1>{{ project.title }}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% if project.description %}
+    {% if project.status == 'New' %}
+      <blockquote>{{ project.description }}</blockquote>
+      <p>{{ project.title }}</p>
+    {% else %}
+      <p>{{ project.description }}</p>
+    {% endif %}
+  {% endif %}
+  {% if project.repo %}
+    Github Repo: <a href="{{ project.location_url }}"> {{ project.repo|safe() }} </a>
+  {% endif %}
+  {% if project.location_url %}
+    <p>Hosted Project: <a href="{{ project.location_url }}">{{ project.location_url }}</a><p>
+  {% endif %}
+  <p>{{ project.createdDate.strftime('%Y-%m-%d') }}</p>
+  <hr>
+  <h2>Notes</h2>
+  {% if project.notes %}
+    {% for note in project.notes %}
+       <p>{{ note.body }}</p>
+       <p><small>Submitted on {{ note.publishedDate.strftime('%Y-%m-%d') }}</small></p>
+      {{ note.text }}
+    {% endfor %}
+  {% endif %}
+  <hr>
+  <h2>Add a note</h2>
+  <form action=".", method="post">
+    {{ forms.render(form) }}
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" value="note">
+    </div>
+  </form>
+  <hr>
+{% endblock %}
