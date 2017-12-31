@@ -19,12 +19,13 @@ class Project(db.Document):
 	startDate = db.DateTimeField()
 	endDate = db.DateTimeField()
 	closed = db.BooleanField()
-	primary_language = db.StringField()
+	primary_language = db.StringField(max_length=55)
 	tools = db.StringField()
 	repo = db.URLField()
 	location_url = db.URLField()
 	week_completed = db.IntField()
 	status = db.StringField(default='New', required=True)
+	sources = db.StringField()
 	notes = db.ListField(db.EmbeddedDocumentField('Note'))
 
 	def get_absolute_url(self):

@@ -28,7 +28,7 @@ class Detail(MethodView):
             project = Project.objects.get_or_404(slug=slug)
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                  'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'},
-                                                 'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
+                                                 'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}, 'sources': {'label': 'Sources Used'}}, 
                                                  exclude=('slug'))
 
             if request.method == 'POST':

@@ -2,14 +2,13 @@
 
 {% block content %}
     {% for project in projects %}
-      <h2><a href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
+      {% if project.status == 'Completed' %}
+        <h2>  <a style="color:#32CD32" href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
+      {% else %}
+        <h2>  <a style="color:#FF8C00" href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
+      {% endif %}
       {% if project.description %}
-        {% if project.status == 'New' %}
-          <blockquote>{{ project.description|truncate(100) }}</blockquote>
-          <p>{{ project.createdDate }}</p>
-        {% else %}
-          <p>{{ project.description|truncate(100) }}</p>
-        {% endif %}
+        <p>{{ project.description|truncate(100) }}</p> 
       {% endif %}
       {% if project.repo %}
         <p><a href="{{ project.repo }}"> GitHub Repo </a></p>
