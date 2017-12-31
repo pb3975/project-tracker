@@ -1,1 +1,1 @@
-web: gunicorn project_tracker.app:app
+web: python run.py
