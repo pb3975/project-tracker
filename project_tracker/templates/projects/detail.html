@@ -9,22 +9,30 @@
 
 {% block content %}
   {% if project.description %}
-    {% if project.status == 'New' %}
-      <blockquote>{{ project.description }}</blockquote>
-      <p>{{ project.title }}</p>
-    {% else %}
-      <p>{{ project.description }}</p>
-    {% endif %}
+     <p> {{ project.description }}</p>
+  {% endif %}
+  <p> <strong> Status: </strong> {{ project.status}} </p>
+  <p> <strong> Primary Programming Language: </strong> {{ project.primary_language }} </p>
+  <p> <strong> Other Tools Used: </strong> </p>
+   {% for tools in project.tools.split() %}
+       <p> {{ tool }} </p>
+   {% endfor %}
+  {% if project.week_completed %}
+    <p> <strong> Week Completed: </strong> {{ project.week_completed }} </p>
   {% endif %}
   {% if project.repo %}
-    Github Repo: <a href="{{ project.location_url }}"> {{ project.repo|safe() }} </a>
+   <p> <strong> Github Repo: </strong> <a href="{{ project.location_url }}"> {{ project.repo|safe() }} </a></p>
   {% endif %}
   {% if project.location_url %}
-    <p>Hosted Project: <a href="{{ project.location_url }}">{{ project.location_url }}</a><p>
+    <p><strong> Hosted Project: </strong> <a href="{{ project.location_url }}">{{ project.location_url }}</a><p>
   {% endif %}
-  <p>{{ project.createdDate.strftime('%Y-%m-%d') }}</p>
+  <p><strong>Resources:</strong> </p>
+  {% for source in project.sources.split() %} 
+    <p>{{ source }}</p>
+  {% endfor %}
+  <p><strong>Date Created:</strong> {{ project.createdDate.strftime('%Y-%m-%d') }}</p>
   <hr>
-  <h2>Notes</h2>
+  <h2>Comments</h2>
   {% if project.notes %}
     {% for note in project.notes %}
        <p>{{ note.body }}</p>
@@ -33,11 +41,11 @@
     {% endfor %}
   {% endif %}
   <hr>
-  <h2>Add a note</h2>
+  <h2>Comment on this project...</h2>
   <form action=".", method="post">
     {{ forms.render(form) }}
     <div class="actions">
-      <input type="submit" class="btn btn-primary" value="note">
+      <input type="submit" class="btn btn-primary" value="Post">
     </div>
   </form>
   <hr>

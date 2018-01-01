@@ -29,7 +29,7 @@ class Detail(MethodView):
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                  'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'},
                                                  'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}, 'sources': {'label': 'Sources Used'}}, 
-                                                 exclude=('slug'))
+                                                 exclude=('slug', 'minutes_worked'))
 
             if request.method == 'POST':
                 form = form_project(request.form, inital=project._data)
@@ -40,7 +40,7 @@ class Detail(MethodView):
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                              'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'}, 'slug': {'label':'Unique Project Name'},
                                                              'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
-                                                             exclude=('startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed'))
+                                                             exclude=('startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked'))
             form = form_project(request.form)
         context = {
             "project": project,

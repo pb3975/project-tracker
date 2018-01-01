@@ -27,6 +27,7 @@ class Project(db.Document):
 	status = db.StringField(default='New', required=True)
 	sources = db.StringField()
 	notes = db.ListField(db.EmbeddedDocumentField('Note'))
+	minutes_worked = db.IntField(default=0)
 
 	def get_absolute_url(self):
 		return url_for('project', kwargs={"slug": self.slug})

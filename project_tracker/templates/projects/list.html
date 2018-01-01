@@ -3,13 +3,15 @@
 {% block content %}
     {% for project in projects %}
       {% if project.status == 'Completed' %}
-        <h2>  <a style="color:#32CD32" href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
+        <h2>  <a style="color:#008000" href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
       {% else %}
         <h2>  <a style="color:#FF8C00" href="{{ url_for('projects.detail', slug=project.slug,) }}">{{ project.title }}</a></h2>
       {% endif %}
+        <p> Status: {{ project.status }}</p>
       {% if project.description %}
         <p>{{ project.description|truncate(100) }}</p> 
       {% endif %}
+
       {% if project.repo %}
         <p><a href="{{ project.repo }}"> GitHub Repo </a></p>
       {% endif %}
@@ -19,7 +21,7 @@
       <p>
         {{ project.createdDate.strftime('%Y-%m-%d') }} |
         {% with total=project.notes|length %}
-            {{ total }} notes {%- if total > 1 %}s{%- endif -%}
+            {{ total }} Comments {%- if total > 1 %}s{%- endif -%}
         {% endwith %}
       </p>
     {% endfor %}
