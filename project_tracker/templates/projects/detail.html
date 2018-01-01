@@ -13,10 +13,12 @@
   {% endif %}
   <p> <strong> Status: </strong> {{ project.status}} </p>
   <p> <strong> Primary Programming Language: </strong> {{ project.primary_language }} </p>
+  {% if projects.tools %}
   <p> <strong> Other Tools Used: </strong> </p>
    {% for tools in project.tools.split() %}
        <p> {{ tool }} </p>
    {% endfor %}
+   {% endif %}
   {% if project.week_completed %}
     <p> <strong> Week Completed: </strong> {{ project.week_completed }} </p>
   {% endif %}
@@ -26,10 +28,12 @@
   {% if project.location_url %}
     <p><strong> Hosted Project: </strong> <a href="{{ project.location_url }}">{{ project.location_url }}</a><p>
   {% endif %}
+  {% if project.source %}
   <p><strong>Resources:</strong> </p>
   {% for source in project.sources.split() %} 
-    <p>{{ source }}</p>
+    <p><a href="{{ source }}"> </a></p>
   {% endfor %}
+  {% endif %}
   <p><strong>Date Created:</strong> {{ project.createdDate.strftime('%Y-%m-%d') }}</p>
   <hr>
   <h2>Comments</h2>
