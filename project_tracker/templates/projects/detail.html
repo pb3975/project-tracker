@@ -15,7 +15,7 @@
   <p> <strong> Primary Programming Language: </strong> {{ project.primary_language }} </p>
   {% if project.tools %}
   <p> <strong> Other Tools Used: </strong> </p>
-   {% for tools in project.tools.split() %}
+   {% for tool in project.tools.split() %}
        <p> {{ tool }} </p>
    {% endfor %}
    {% endif %}
