@@ -31,7 +31,7 @@
   {% if project.source %}
   <p><strong>Resources:</strong> </p>
   {% for source in project.sources.split() %} 
-    <p><a href="{{ source }}"> </a></p>
+    <p><a href="{{ source }}">{{ source }}</a></p>
   {% endfor %}
   {% endif %}
   <p><strong>Date Created:</strong> {{ project.createdDate.strftime('%Y-%m-%d') }}</p>
