@@ -15,10 +15,10 @@
   <p> <strong> Primary Programming Language: </strong> {{ project.primary_language }} </p>
   {% if project.tools %}
   <p> <strong> Other Tools Used: </strong> </p>
-   {% for tool in project.tools.split() %}
+     {% for tool in project.tools.split() %}
        <p> {{ tool }} </p>
-   {% endfor %}
-   {% endif %}
+     {% endfor %}
+  {% endif %}
   {% if project.week_completed %}
     <p> <strong> Week Completed: </strong> {{ project.week_completed }} </p>
   {% endif %}
@@ -28,11 +28,11 @@
   {% if project.location_url %}
     <p><strong> Hosted Project: </strong> <a href="{{ project.location_url }}">{{ project.location_url }}</a><p>
   {% endif %}
-  {% if project.source %}
-  <p><strong>Resources:</strong> </p>
-  {% for source in project.sources.split() %} 
+  {% if project.sources %}
+    <p><strong>Resources:</strong> </p>
+    {% for source in project.sources.split() %} 
     <p><a href="{{ source }}">{{ source }}</a></p>
-  {% endfor %}
+    {% endfor %}
   {% endif %}
   <p><strong>Date Created:</strong> {{ project.createdDate.strftime('%Y-%m-%d') }}</p>
   <hr>
