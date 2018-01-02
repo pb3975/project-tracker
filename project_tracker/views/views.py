@@ -16,7 +16,7 @@ class ListView(MethodView):
 
 class DetailView(MethodView):
 
-    form = model_form(Note, field_args= {'body' :{'label': 'Write your note here...'}})
+    form = model_form(Note, field_args={'body' :{'label': 'Write your comment here...'}}, exclude=['publishedDate'])
 
     def get_context(self, slug):
         project = Project.objects.get_or_404(slug=slug)
