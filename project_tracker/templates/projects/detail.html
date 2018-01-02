@@ -13,7 +13,7 @@
   {% endif %}
   <p> <strong> Status: </strong> {{ project.status}} </p>
   <p> <strong> Primary Programming Language: </strong> {{ project.primary_language }} </p>
-  {% if projects.tools %}
+  {% if project.tools %}
   <p> <strong> Other Tools Used: </strong> </p>
    {% for tools in project.tools.split() %}
        <p> {{ tool }} </p>
