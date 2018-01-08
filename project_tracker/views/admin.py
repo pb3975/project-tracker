@@ -18,6 +18,8 @@ class List(MethodView):
         return render_template('admin/list.html', projects=projects)
 
 
+
+
 class Detail(MethodView):
 
     decorators = [requires_auth]
@@ -65,8 +67,14 @@ class Detail(MethodView):
             return redirect(url_for('admin.index'))
         return render_template('admin/detail.html', **context)
 
-
 # Register the urls
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/admin/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/<slug>/', view_func=Detail.as_view('edit'))
+
+@admin.route('/admin/delete/<id>', methods=['POST', 'GET'])
+def remove(id):
+    project = Project.objects.get_or_404(id=id)
+    project.delete()
+    return redirect(url_for('admin.index'))
+

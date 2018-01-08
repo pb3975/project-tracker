@@ -14,7 +14,7 @@
       <div class="container">
         <div class="navbar-header">
           <h2>
-              <a href="/" class="brand">Track It!</a> <small>a simple Project Tracker</small>
+              <a href="/home" class="brand">Track It!</a> <small>a simple Project Tracker</small>
           </h2>
         </div>
         <div class="navbar-collapse">
@@ -29,6 +29,14 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-    {% block js_footer %}{% endblock %}
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous">          
+      </script>
+      <script> src="static/base.js" </script>
+      <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      </script>
   </body>
 </html>

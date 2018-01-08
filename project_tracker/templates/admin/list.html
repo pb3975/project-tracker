@@ -12,9 +12,33 @@
       <tr>
         <th><a href="{{ url_for("admin.edit", slug=project.slug) }}">{{ project.title }}</a></th>
         <td>{{ project.createdDate.strftime('%Y-%m-%d') }}</td>
-        <td><a href="{{ url_for("admin.edit", slug=project.slug) }}" class="btn primary">Edit</a></td>
+        <td><a href="{{ url_for("admin.edit", slug=project.slug) }}" class="btn primary">Edit</a>
+            <a href="{{ url_for('admin.remove', id=project.id) }}" id="delete" method=["POST] class="btn primary">Delete</a></td>
       </tr>
     {% endfor %}
     </tbody>
+
+
+
+
+    <script>
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous">          
+      </script>
+
+
+    <script type=text/javascript>
+      $('#delete').on('click', function() {
+       if (confirm("Are you sure you want to delete this project?")) { 
+        $.ajax({ url: '/admin/t/<%= project.slug %>', method: 'DELETE', }).done}
+     });
+</script>
+
+
+
+
+
+
   </table>
 {% endblock %}

@@ -1,19 +1,43 @@
 import datetime
 from flask import url_for
-from project_tracker import db
+from flask_login import UserMixin
+from project_tracker import db, bcrypt
 from flask_mongoengine import MongoEngine
 
 
 # db = MongoEngine(app)
 
 
+class User(db.Document):
+	email = db.EmailField(required=True)
+	password = db.StringField(required=True, max=80)
+	createdDate = db.DateTimeField(default=datetime.datetime.now, required=True)
+	username = db.StringField(required=True, max=80)
+
+	def __repr__(self):
+		return '<User %r>' % self.email
+	def is_authenticated(self):
+		return True
+	def is_active(self):
+		return True
+	def is_anonymous(self):
+		return False
+	def get_id(self):
+		return str(self.email)
+
+
+	
+
 class Note(db.EmbeddedDocument):
 	publishedDate = db.DateTimeField(default=datetime.datetime.now)
-	body = db.StringField()
+	body = db.StringField(required=True)
+	# author = db.ReferenceField(User)
 
 class Project(db.Document):
 	title = db.StringField(max_length=90, required=True)
 	slug = db.StringField(max_length=255, required=True)
+	# owner = db.ReferenceField(User)
+	public = db.BooleanField(default=False)
 	description = db.StringField(required=True)
 	createdDate = db.DateTimeField(default=datetime.datetime.now, required=True)
 	startDate = db.DateTimeField()
@@ -30,14 +54,14 @@ class Project(db.Document):
 	minutes_worked = db.IntField(default=0)
 
 	def get_absolute_url(self):
-		return url_for('project', kwargs={"slug": self.slug})
+		return url_for('project', kwargs={"id": self.id})
 
 	def __unicode__(self):
 		return self.title 
 
 	meta = { 
 	    'allow_inheretence': True,
-	    'indexes': ['-createdDate', 'slug'],
+	    'indexes': ['-createdDate', 'id'],
 	    'ordering': ['createdDate']
 	   }
 
