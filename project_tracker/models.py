@@ -13,6 +13,7 @@ class User(db.Document):
 	password = db.StringField(required=True, max=80)
 	createdDate = db.DateTimeField(default=datetime.datetime.now, required=True)
 	username = db.StringField(required=True, max=80)
+	authenticated = db.BooleanField(default=False)
 
 	def __repr__(self):
 		return '<User %r>' % self.email
@@ -31,12 +32,12 @@ class User(db.Document):
 class Note(db.EmbeddedDocument):
 	publishedDate = db.DateTimeField(default=datetime.datetime.now)
 	body = db.StringField(required=True)
-	# author = db.ReferenceField(User)
+	author = db.ReferenceField(User)
 
 class Project(db.Document):
 	title = db.StringField(max_length=90, required=True)
-	slug = db.StringField(max_length=255, required=True)
-	# owner = db.ReferenceField(User)
+	slug = db.StringField(max_length=255)
+	owner = db.ReferenceField(User)
 	public = db.BooleanField(default=False)
 	description = db.StringField(required=True)
 	createdDate = db.DateTimeField(default=datetime.datetime.now, required=True)

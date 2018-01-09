@@ -1,10 +1,9 @@
 from flask import Blueprint, request, redirect, render_template, url_for
 from flask.views import MethodView
-
 from flask_mongoengine.wtf import model_form
-
 from project_tracker.auth import requires_auth
 from project_tracker.models import Project, Note
+from flask_login import current_user
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
@@ -42,7 +41,7 @@ class Detail(MethodView):
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                              'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'}, 'slug': {'label':'Unique Project Name'},
                                                              'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
-                                                             exclude=('startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked'))
+                                                             exclude=('startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked', 'owner'))
             form = form_project(request.form)
         context = {
             "project": project,
@@ -60,16 +59,18 @@ class Detail(MethodView):
         form = context.get('form')
 
         if form.validate():
+
             project = context.get('project')
             form.populate_obj(project)
+            project.owner = current_user.id
             project.save()
 
-            return redirect(url_for('admin.index'))
+            return redirect(url_for('projects.home'))
         return render_template('admin/detail.html', **context)
 
 # Register the urls
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
-admin.add_url_rule('/admin/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
+admin.add_url_rule('/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/<slug>/', view_func=Detail.as_view('edit'))
 
 @admin.route('/admin/delete/<id>', methods=['POST', 'GET'])

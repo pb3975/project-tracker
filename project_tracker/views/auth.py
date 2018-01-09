@@ -15,10 +15,10 @@ def load_user(email):
     return User.objects(email=email).first()
 
 
-@auth.route('/home')
-def start():
-    projects = Project.objects(public=True)
-    return render_template('projects/list.html', projects=projects)
+# @auth.route('/home')
+# def start():
+#     projects = Project.objects(public=True)
+#     return render_template('projects/list.html', projects=projects)
 
 
 @auth.route('/login', methods=['POST', 'GET'])

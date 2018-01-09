@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Project Tracker</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <style>.content {padding-top: 80px;} a.brand {color: #FF8C00 }</style>
+    <style>.content {padding-top: 80px;} a.brand {color: #FF8C00; }</style>
   </head>
 
   <body>
@@ -14,13 +14,41 @@
       <div class="container">
         <div class="navbar-header">
           <h2>
-              <a href="/home" class="brand">Track It!</a> <small>a simple Project Tracker</small>
+              <a href="/" class="brand">Track It!</a> <small>a simple Programming Project Tracker </small>
           </h2>
         </div>
         <div class="navbar-collapse">
-        </div><!--/.nav-collapse -->
+          <ul class="nav nav-pills navbar-nav navbar-right ">
+          {% if current_user.is_authenticated %}
+            <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Options
+            <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ url_for('admin.create') }}">Create a New Project</a></li>
+              <li><a href="{{ url_for('projects.home') }}">View All Projects</a></li>
+              <li><a href="{{ url_for('users.logout') }}">Logout</a></li>              
+            </ul>
+            </li>
+        
+          {% else %}
+            <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Sign in/Register
+            <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+              <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            </ul>
+           </li>          
+          {% endif %}
+        </ul>
+        </div>
       </div>
     </nav>
+
     {%- endblock -%}
 
     <div class="container">
@@ -34,9 +62,11 @@
         integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
         crossorigin="anonymous">          
       </script>
-      <script> src="static/base.js" </script>
-      <script type=text/javascript>
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-      </script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      {% block js_footer %}
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+      {% endblock %}
+
   </body>
 </html>

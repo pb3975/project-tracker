@@ -1,20 +1,18 @@
 {% extends "base.html" %}
 {% import "_forms.html" as forms %}
 
+
 {% block content %}
-  <h2>
-    {% if create %}
-      Add new Project
-    {% else %}
-      Edit Project
-    {% endif %}
-  </h2>
+  <h2>Add new Project</h2>
 
   <form action="." method="post">
     {{ forms.render(form) }}
     <div class="actions">
-      <input type="submit" class="btn btn-primary" value="save">
+      <input type="submit" class="btn btn-primary" value="Save Project">
       <a href="{{ url_for('projects.home') }}" class="btn btn-default">Cancel</a>
     </div>
   </form>
+      {% block js_footer %}
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+      {% endblock %}
 {% endblock %}

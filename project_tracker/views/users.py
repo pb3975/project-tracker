@@ -14,4 +14,4 @@ def profile():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('projects.list'))
+    return redirect(url_for('projects.home'))
