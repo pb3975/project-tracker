@@ -26,6 +26,13 @@ class User(db.Document):
 	def get_id(self):
 		return str(self.email)
 
+	meta = { 
+	    'allow_inheretence': True,
+	    'indexes': ['-createdDate', 'email'],
+	    'ordering': ['createdDate']
+	   }
+
+
 
 	
 
@@ -62,7 +69,7 @@ class Project(db.Document):
 
 	meta = { 
 	    'allow_inheretence': True,
-	    'indexes': ['-createdDate', 'id'],
+	    'indexes': ['-createdDate', 'slug'],
 	    'ordering': ['createdDate']
 	   }
 

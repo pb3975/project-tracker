@@ -10,10 +10,10 @@
     <tbody>
     {% for project in projects %}
       <tr>
-        <th><a href="{{ url_for("admin.edit", slug=project.slug) }}">{{ project.title }}</a></th>
+        <th><a href="{{ url_for('admin.edit', _id=project.id) }}">{{ project.title }}</a></th>
         <td>{{ project.createdDate.strftime('%Y-%m-%d') }}</td>
-        <td><a href="{{ url_for("admin.edit", slug=project.slug) }}" class="btn primary">Edit</a>
-            <a href="{{ url_for('admin.remove', id=project.id) }}" id="delete" method=["POST] class="btn primary">Delete</a></td>
+        <td><a href="{{ url_for('admin.edit', _id=project.id) }}" class="btn primary">Edit</a>
+            <a href="{{ url_for('admin.remove', _id=project.id) }}" id="delete" method=["POST] class="btn primary">Delete</a></td>
       </tr>
     {% endfor %}
     </tbody>

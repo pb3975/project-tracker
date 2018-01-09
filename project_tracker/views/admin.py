@@ -23,10 +23,10 @@ class Detail(MethodView):
 
     decorators = [requires_auth]
 
-    def get_context(self, slug=None):
+    def get_context(self, _id=None):
 
-        if slug:
-            project = Project.objects.get_or_404(slug=slug)
+        if _id:
+            project = Project.objects.get_or_404(id=_id)
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                  'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'},
                                                  'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}, 'sources': {'label': 'Sources Used'}}, 
@@ -41,7 +41,7 @@ class Detail(MethodView):
             form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
                                                              'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'}, 'slug': {'label':'Unique Project Name'},
                                                              'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
-                                                             exclude=('startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked', 'owner'))
+                                                             exclude=('slug', 'startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked', 'owner'))
             form = form_project(request.form)
         context = {
             "project": project,
@@ -51,11 +51,11 @@ class Detail(MethodView):
         return context
 
     def get(self, slug):
-        context = self.get_context(slug)
+        context = self.get_context(_id)
         return render_template('admin/detail.html', **context)
 
     def post(self, slug):
-        context = self.get_context(slug)
+        context = self.get_context(_id)
         form = context.get('form')
 
         if form.validate():
@@ -71,11 +71,11 @@ class Detail(MethodView):
 # Register the urls
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
-admin.add_url_rule('/admin/<slug>/', view_func=Detail.as_view('edit'))
+admin.add_url_rule('/admin/<_id>/', view_func=Detail.as_view('edit'))
 
-@admin.route('/admin/delete/<id>', methods=['POST', 'GET'])
-def remove(id):
-    project = Project.objects.get_or_404(id=id)
+@admin.route('/admin/delete/<_id>', methods=['POST', 'GET'])
+def remove(_id):
+    project = Project.objects.get_or_404(id=_id)
     project.delete()
     return redirect(url_for('admin.index'))
 

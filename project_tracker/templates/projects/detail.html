@@ -37,7 +37,15 @@
   <p><strong>Date Created:</strong> {{ project.createdDate.strftime('%Y-%m-%d') }}</p>
   <hr>
   <h2>Comments</h2>
-  
+  {% if project.notes %}
+    {% for note in project.notes %}
+       <p>{{ note.body }}</p>
+       <p><strong>{{ note.author.username }}</strong> <small>on {{ note.publishedDate.strftime('%H:%M %Y-%m-%d') }}</small></p>
+      {{ note.body }}
+    {% endfor %}
+  {% else %}
+  No Comments yet. Be the First!
+  {% endif %}
   <hr>
   
   <form action=".", method="post">
