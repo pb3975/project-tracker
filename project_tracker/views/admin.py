@@ -46,15 +46,15 @@ class Detail(MethodView):
         context = {
             "project": project,
             "form": form,
-            "create": slug is None
+            "create": _id is None
         }
         return context
 
-    def get(self, slug):
+    def get(self, _id):
         context = self.get_context(_id)
         return render_template('admin/detail.html', **context)
 
-    def post(self, slug):
+    def post(self, _id):
         context = self.get_context(_id)
         form = context.get('form')
 
@@ -70,7 +70,7 @@ class Detail(MethodView):
 
 # Register the urls
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
-admin.add_url_rule('/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
+admin.add_url_rule('/create/', defaults={'_id': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/<_id>/', view_func=Detail.as_view('edit'))
 
 @admin.route('/admin/delete/<_id>', methods=['POST', 'GET'])
