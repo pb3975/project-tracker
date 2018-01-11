@@ -3,7 +3,7 @@ from flask.views import MethodView
 from flask_mongoengine.wtf import model_form
 from project_tracker.auth import requires_auth
 from project_tracker.models import Project, Note
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
@@ -49,11 +49,11 @@ class Detail(MethodView):
             "create": _id is None
         }
         return context
-
+    @login_required
     def get(self, _id):
         context = self.get_context(_id)
         return render_template('admin/detail.html', **context)
-
+    @login_required
     def post(self, _id):
         context = self.get_context(_id)
         form = context.get('form')
@@ -73,7 +73,9 @@ admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/create/', defaults={'_id': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/<_id>/', view_func=Detail.as_view('edit'))
 
+
 @admin.route('/admin/delete/<_id>', methods=['POST', 'GET'])
+@login_required
 def remove(_id):
     project = Project.objects.get_or_404(id=_id)
     project.delete()

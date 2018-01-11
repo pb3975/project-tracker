@@ -1,5 +1,5 @@
 from flask import Blueprint, request, redirect, render_template, url_for
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from project_tracker import MongoEngine, bcrypt, login_manager, db
 from project_tracker.models import Project, Note, User
 import re
@@ -15,11 +15,6 @@ def load_user(email):
     return User.objects(email=email).first()
 
 
-# @auth.route('/home')
-# def start():
-#     projects = Project.objects(public=True)
-#     return render_template('projects/list.html', projects=projects)
-
 
 @auth.route('/login', methods=['POST', 'GET'])
 def login():
@@ -32,7 +27,6 @@ def login():
             user = User.objects(username=user_input).first()
 
         if user:
-            print("TEST - ", user.email)
             if user.password == password:
                 user_obj = user
                 login_user(user_obj)
@@ -55,7 +49,8 @@ def register():
         else:
             user = User(email=email, password=password, username=username)
             user.save()
-            return redirect(url_for('auth.login'))
+            login_user(user)
+            return redirect(url_for('users.profile'))
     return render_template('user/register.html')
 
 @auth.route('/protected')
