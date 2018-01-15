@@ -21,7 +21,6 @@ class List(MethodView):
 
 class Detail(MethodView):
 
-    decorators = [requires_auth]
 
     def get_context(self, _id=None):
 
@@ -71,9 +70,9 @@ class Detail(MethodView):
 # Register the urls
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/create/', defaults={'_id': None}, view_func=Detail.as_view('create'))
-admin.add_url_rule('/admin/<_id>/', view_func=Detail.as_view('edit'))
+admin.add_url_rule('/<_id>/', view_func=Detail.as_view('edit'))
 
-
+decorators = [requires_auth]
 @admin.route('/admin/delete/<_id>', methods=['POST', 'GET'])
 @login_required
 def remove(_id):
