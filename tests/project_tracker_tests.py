@@ -52,31 +52,25 @@ class ProjectTrackerTestCase(unittest.TestCase):
         self.assertTrue(unitTester.is_authenticated)
         unitTester.delete()
 
-    # #Ensure Login works correctly
-    # def test_project_create_route(self): 
-    #     unitTester = User(username='UnitTester',password='password', email='unit@test.com')
-    #     unitTester.is_authenticated = True
-    #     unitTester.save()
-    #     tester = app.test_client(self)
-    #     response = tester.post(
-    #         '/profile',
-    #         data = dict(title='TestTitle', public=True,description='TEST Description', form="create" ),
-    #         follow_redirects=True
-    #         )
-    #     print(len(Project.objects(owner=unitTester.id)))
-    #     self.assertTrue(form.is_valid())
-    #     unitTester.delete()
+    #Ensure Post works correctly
+    def test_project_create_route(self): 
+        unitTester = User(username='UnitTester',password='password', email='unit@test.com')
+        unitTester.is_authenticated = True
+        unitTester.save()
+        tester = app.test_client(self)
+        response = tester.post(
+            '/create',
+            data = dict(title='TestTitle', public=True,description='TEST Description', form="form" ),
+            follow_redirects=True
+            )
+        self.assertTrue(response.status_code in range(200,299))
+
+        unitTester.delete()
 
 
 
 
 
-
-    def test_project_create(self):
-        #Build out here
-        pass
-
-# unitTester.delete()
 
 if __name__ == '__main__':
     unittest.main()
