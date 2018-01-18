@@ -34,6 +34,7 @@
         {% endwith %}
       </p>
     {% endfor %}
+    <p> <a href="{{ url_for('admin.edit', _id=projects.id) }}">Edit</a></p>
 {% else %}
 <h3> You don't have any projects yet. Create one <a href="{{ url_for('admin.create') }}">here!</a></h3>
 {% endif %}
