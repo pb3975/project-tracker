@@ -59,7 +59,7 @@ class ProjectTrackerTestCase(unittest.TestCase):
     #     unitTester.save()
     #     tester = app.test_client(self)
     #     response = tester.post(
-    #         '/profile',
+    #         '/create',
     #         data = dict(title='TestTitle', public=True,description='TEST Description', form="create" ),
     #         follow_redirects=True
     #         )

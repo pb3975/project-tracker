@@ -21,39 +21,37 @@ class List(MethodView):
 
 class Detail(MethodView):
 
-    decorators = [requires_auth]
 
-    def get_context(self, _id=None):
+   def get_context(self, _id=None):
 
-        if _id:
-            project = Project.objects.get_or_404(id=_id)
-            form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
-                                                 'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'},
-                                                 'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}, 'sources': {'label': 'Sources Used'}}, 
-                                                 exclude=('slug', 'minutes_worked'))
+    if _id:
+        project = Project.objects.get_or_404(id=_id)
+        form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
+                                             'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'},
+                                             'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}, 'sources': {'label': 'Sources Used'}}, 
+                                             exclude=('slug', 'minutes_worked'))
 
-            if request.method == 'POST':
-                form = form_project(request.form, inital=project._data)
-            else:
-                form = form_project(obj=project)
+        if request.method == 'POST':
+            form = form_project(request.form, inital=project._data)
         else:
-            project = Project()
-            form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
-                                                             'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'}, 'slug': {'label':'Unique Project Name'},
-                                                             'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
-                                                             exclude=('slug', 'startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked', 'owner'))
-            form = form_project(request.form)
-        context = {
-            "project": project,
-            "form": form,
-            "create": _id is None
-        }
-        return context
-    @login_required
+            form = form_project(obj=project)
+    else:
+        project = Project()
+        form_project = model_form(Project,  field_args = {'title': {'label': 'Title'},'description': {'label': 'Project Description'},
+                                                         'primary_language': {'label':'Primary Programming Language'}, 'tools': {'label':'Other Tools'}, 'slug': {'label':'Unique Project Name'},
+                                                         'repo': {'label':'GitHub Repository'}, 'location_url': {'label': 'Hosted Link'},'status': {'label':'Status'}}, 
+                                                         exclude=('slug', 'startDate', 'endDate', 'createdDate', 'notes', 'closed', 'week_completed', 'minutes_worked', 'owner'))
+        form = form_project(request.form)
+    context = {
+        "project": project,
+        "form": form,
+        "create": _id is None
+    }
+    return context
+
     def get(self, _id):
         context = self.get_context(_id)
         return render_template('admin/detail.html', **context)
-    @login_required
     def post(self, _id):
         context = self.get_context(_id)
         form = context.get('form')
