@@ -17,4 +17,4 @@ COPY . /usr/src/project_tracker
 # Expose the Flask port
 EXPOSE 5000
 
-CMD python /usr/src/project_tracker/run.py
+CMD python run.py
