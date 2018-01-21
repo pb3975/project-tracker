@@ -7,5 +7,5 @@ sudo: required
 script:
 - py.test test.py
 
-# after_success:
-#   - sh .travis/deploy_dockerhub.sh
+after_success:
+  - sh .travis/deploy_dockerhub.sh
