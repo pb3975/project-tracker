@@ -40,7 +40,9 @@
   {% if project.notes %}
     {% for note in project.notes %}
        <p>{{ note.body }}</p>
+       {% if note.author %}
        <p><strong>{{ note.author.username }}</strong> <small>on {{ note.publishedDate.strftime('%H:%M %Y-%m-%d') }}</small></p>
+       {% endif %}
       {{ note.body }}
     {% endfor %}
   {% else %}
