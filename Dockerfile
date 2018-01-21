@@ -14,12 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /usr/src/project_tracker
 
-CMD export APP_SETTINGS=APP_SETTINGS
-CMD export DB_PASS=DB_PASS
-CMD export DB_NAME=DB_NAME
-CMD export ADMIN_USER=ADMIN_USER
-CMD export ADMIN_PASS=ADMIN_PASS
-
 # Expose the Flask port
 EXPOSE 5000
 
